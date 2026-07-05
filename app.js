@@ -242,35 +242,40 @@ const App = (() => {
 
     // ─── LOADING SEQUENCE ───
     function runLoadingSequence() {
-
-
         const fill  = document.getElementById('loading-bar-fill');
         const label = document.getElementById('loading-bar-label');
         const barWrap = document.getElementById('loading-bar-wrap');
         const prompt = document.getElementById('press-any-prompt');
 
-        let pct = 0;
-        const steps = [
-            { target: 20,  delay: 200,  msg: 'LOADING ASSETS...' },
-            { target: 45,  delay: 350,  msg: 'INITIALIZING ENGINE...' },
-            { target: 60,  delay: 280,  msg: 'LOADING SPRITES...' },
-            { target: 80,  delay: 320,  msg: 'CALIBRATING CRT...' },
-            { target: 100, delay: 400,  msg: 'READY!' },
+        if (!fill || !label) return;
+
+        // List of core assets to preload
+        const resources = [
+            { url: 'background.mp4', label: 'LOADING INTRO VIDEO...' },
+            { url: 'White Space (Omori Original Soundtrack).m4a', label: 'LOADING WHITE SPACE BGM...' },
+            { url: 'The Rebel Army (Final Fantasy II Original Soundtrack).m4a', label: 'LOADING REBEL ARMY BGM...' },
+            { url: 'assets/images.png', label: 'LOADING PROFILE IMAGE...' },
+            { url: 'assets/images2.png', label: 'LOADING GRAPHIC ASSETS...' },
+            { url: 'assets/antologi-puisi.png', label: 'LOADING PORTFOLIO IMAGES...' },
+            { url: 'assets/novel.png', label: 'LOADING PORTFOLIO IMAGES...' },
+            { url: 'assets/website-nyangkem.png', label: 'LOADING PORTFOLIO IMAGES...' },
+            { url: 'assets/horeg-akar-rumput.jpg', label: 'LOADING BRANDING IMAGES...' },
+            { url: 'assets/wibu-akar-rumput.jpg', label: 'LOADING BRANDING IMAGES...' }
         ];
 
-        let i = 0;
-        function step() {
-            if (i >= steps.length) {
+        let loadedCount = 0;
+
+        function updateProgress(msg) {
+            loadedCount++;
+            const pct = Math.round((loadedCount / resources.length) * 100);
+            
+            fill.style.width = pct + '%';
+            label.textContent = `${msg} ${pct}%`;
+
+            if (loadedCount >= resources.length) {
+                label.textContent = 'SYSTEM READY! 100%';
                 setTimeout(showPressAnyPrompt, 600);
-                return;
             }
-            const s = steps[i++];
-            setTimeout(() => {
-                pct = s.target;
-                fill.style.width = pct + '%';
-                label.textContent = s.msg + ' ' + pct + '%';
-                step();
-            }, s.delay);
         }
 
         function showPressAnyPrompt() {
@@ -301,8 +306,24 @@ const App = (() => {
             document.addEventListener('click', onContinue);
         }
 
-        // Slight delay before starting
-        setTimeout(step, 400);
+        // Slight delay before starting preload queue
+        setTimeout(() => {
+            resources.forEach(res => {
+                fetch(res.url)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Fetch failed');
+                        return response.blob();
+                    })
+                    .then(() => {
+                        updateProgress(res.label);
+                    })
+                    .catch(err => {
+                        console.warn(`Failed to preload ${res.url}:`, err);
+                        // Fail-safe: step loader forward even on error
+                        updateProgress('LOADING ASSET...');
+                    });
+            });
+        }, 300);
     }
 
     // ─── NAVIGATION ───
