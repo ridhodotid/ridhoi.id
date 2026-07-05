@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RIDHOI — Portfolio</title>
+    <meta name="description" content="Portfolio Ridhoi — Selamat datang di dunia pixel saya. Lihat project, tulisan, dan cara menghubungi saya." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     VIDEO BACKGROUND
+═══════════════════════════════════════════════════════════ -->
+<video id="bg-video" autoplay loop muted playsinline aria-hidden="true">
+    <source src="background.mp4" type="video/mp4">
+</video>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CRT OVERLAY (always on top)
+═══════════════════════════════════════════════════════════ -->
+<div id="crt-overlay" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATE 1 — LOADING SCREEN
+═══════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════
+     STATE 1 & 2 — JRPG TITLE SCREEN & MAIN MENU
+═══════════════════════════════════════════════════════════ -->
+<section id="main-menu-container" aria-label="Title and Menu">
+
+
+    <div class="screen-content" id="screen-content">
+        <!-- Title Container (centered initially, slides up) -->
+        <div class="game-title-container" id="game-title-container">
+            <div class="loading-subtitle">PORTOFOLIO</div>
+            <h1 class="loading-title">MUHAMMAD RIDHOI</h1>
+            <div class="loading-class">SANG PALU GADA</div>
+        </div>
+
+        <!-- Loading Bar Wrap -->
+        <div class="loading-bar-wrap" id="loading-bar-wrap">
+            <div class="loading-bar-track">
+                <div class="loading-bar-fill" id="loading-bar-fill"></div>
+            </div>
+            <span class="loading-bar-label" id="loading-bar-label">LOADING... 0%</span>
+        </div>
+
+        <!-- Press Any Prompt -->
+        <p class="loading-sub retro-blink hidden" id="press-any-prompt">PRESS ANY TO CONTINUE</p>
+
+        <!-- Main Menu Layout (initially hidden, slides up/fades in) -->
+        <div class="menu-layout hidden" id="menu-layout">
+            <div class="menu-center">
+                <nav class="main-nav pixel-box" aria-label="Navigation">
+                    <ul class="nav-list" id="nav-list">
+                        <li class="nav-item" data-section="about" id="nav-about" tabindex="0" role="button" aria-label="Tentang Saya">
+                            <span class="nav-cursor">▶</span>
+                            <span class="nav-label">TENTANG SAYA</span>
+                        </li>
+                        <li class="nav-item" data-section="projects" id="nav-projects" tabindex="0" role="button" aria-label="Project">
+                            <span class="nav-cursor">▶</span>
+                            <span class="nav-label">PROJECT</span>
+                        </li>
+                        <li class="nav-item" data-section="writing" id="nav-writing" tabindex="0" role="button" aria-label="Tulisan">
+                            <span class="nav-cursor">▶</span>
+                            <span class="nav-label">TULISAN</span>
+                        </li>
+                        <li class="nav-item" data-section="contact" id="nav-contact" tabindex="0" role="button" aria-label="Kontak">
+                            <span class="nav-cursor">▶</span>
+                            <span class="nav-label">KONTAK</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="status-box pixel-box">
+                    <p class="status-text" id="status-text">
+                        <span class="retro-blink">▼</span> PILIH MENU UNTUK MELANJUTKAN...
+                    </p>
+                </div>
+
+                <div class="menu-footer">
+                    <span class="footer-hint">[ENTER] SELECT &nbsp;&nbsp; [ESC] BACK</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="loading-hint" id="loading-hint">© 2026 MUHAMMAD RIDHOI. ALL RIGHTS RESERVED.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATE 3 — CONTENT WINDOW
+═══════════════════════════════════════════════════════════ -->
+<section id="content-window" class="hidden" aria-label="Content">
+    <div class="content-layout">
+
+        <!-- Top bar -->
+        <div class="content-topbar">
+            <button class="btn-back pixel-box" id="btn-back" aria-label="Kembali ke menu">
+                ◀ BACK
+            </button>
+            <div class="content-title-bar" id="content-title-bar">
+                <span id="content-title-text">TENTANG SAYA</span>
+            </div>
+            <div class="content-page-info" id="content-page-info"></div>
+        </div>
+
+        <!-- Scrollable pane -->
+        <div class="content-pane pixel-box" id="content-pane">
+            <!-- Injected by JS -->
+        </div>
+
+        <!-- Bottom hints -->
+        <div class="content-bottom-bar">
+            <span class="footer-hint">[↑↓] SCROLL &nbsp;&nbsp; [ESC] BACK</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     AUDIO CONTROLLER (hidden)
+═══════════════════════════════════════════════════════════ -->
+<button id="audio-toggle" aria-label="Toggle sound" title="Toggle BGM / SFX">
+    <span id="audio-icon">✕</span> <span id="audio-text">SOUND: OFF</span>
+</button>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SETTINGS MODAL (Sound & Soundtrack configuration)
+═══════════════════════════════════════════════════════════ -->
+<div id="settings-modal" class="modal-overlay hidden" aria-hidden="true">
+    <div class="pixel-box modal-content">
+        <h3 class="modal-title">◄ SYSTEM CONFIG ◄</h3>
+        
+        <div class="setting-row">
+            <span class="setting-label">SOUND EFFECTS:</span>
+            <div class="setting-choices">
+                <button type="button" class="btn-choice" id="btn-sound-on">ON</button>
+                <button type="button" class="btn-choice" id="btn-sound-off">OFF</button>
+            </div>
+        </div>
+
+        <div class="setting-row" id="row-soundtrack">
+            <span class="setting-label">SOUNDTRACK:</span>
+            <button type="button" class="btn-choice btn-select" id="btn-soundtrack-select">
+                <span id="label-active-track">WHITE SPACE</span> <span>▼</span>
+            </button>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn-submit btn-save" id="btn-settings-save">SAVE CHANGES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SOUNDTRACK SELECTION SUB-MODAL
+═══════════════════════════════════════════════════════════ -->
+<div id="soundtrack-modal" class="modal-overlay hidden" aria-hidden="true">
+    <div class="pixel-box modal-content sub-modal">
+        <h3 class="modal-title">◄ SELECT TRACK ◄</h3>
+        
+        <ul class="track-list">
+            <li class="track-item" data-track="whitespace" tabindex="0" role="button">
+                <span class="track-cursor">▶</span>
+                <div class="track-info">
+                    <span class="track-name">WHITE SPACE</span>
+                    <span class="track-game">OMORI OST</span>
+                </div>
+            </li>
+            <li class="track-item" data-track="rebelarmy" tabindex="0" role="button">
+                <span class="track-cursor">▶</span>
+                <div class="track-info">
+                    <span class="track-name">THE REBEL ARMY</span>
+                    <span class="track-game">FF II OST</span>
+                </div>
+            </li>
+        </ul>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn-choice" id="btn-track-back">◀ BACK</button>
+        </div>
+    </div>
+</div>
+
+<script src="about.js"></script>
+<script src="projects.js"></script>
+<script src="writing.js"></script>
+<script src="contact.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
