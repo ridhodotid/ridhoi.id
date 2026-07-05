@@ -36,13 +36,31 @@ CONTENT.about = {
                 <div class="about-tab-content" id="tab-status">
                     <h2 class="section-heading">// BIODATA</h2>
                     <p class="body-text">
-                        Halo! Saya <span style="color:var(--color-yellow)">Muhammad Ridhoi, S.Hum.</span> — alumni S1 Bahasa dan Sastra Indonesia Universitas Airlangga (UNAIR), Surabaya.
+                        Saya, <span style="color:var(--color-yellow)">Muhammad Ridhoi</span>, merupakan warga asli Nganjuk yang punya rasa ingin tahu yang tinggi—sekaligus wibu intelek. Saya lulusan program studi S1 Bahasa dan Sastra Indonesia, Universitas Airlangga (dengan ijazah asli, tentunya).
+                    </p>
+                    <p class="body-text" style="margin-top: 12px;">
+                        Selama berkuliah, saya aktif menulis artikel, esai, karya sastra, hingga konten digital. Kadang-kadang juga bikin website kayak gini. Saya saat ini aktif dalam lembaga advokasi Komite Nasional Pelestarian Kretek (KNPK), dan aktif pula di Komunitas Bahagia EA—komunitas rintisan Puthut EA. Kalau mau bertemu saya, silakan bertandang ke Akademi Bahagia. Pasti ketemu, kok.
+                    </p>
+                    <p class="body-text" style="margin-top: 12px;">
+                        Sadar bahwa lulusan Sarjana Humaniora tak terlalu laku di dunia kerja, saya akhirnya tersesat. Jalan hidup saya melompat ke berbagai bidang. Bahkan, saya sendiri tidak tahu apa saja yang saya bisa dan apa saja yang saya kuasai.
                     </p>
                     <p class="body-text" style="font-style: italic; color: var(--color-shadow); font-size: 15px; margin: 12px 0;">
-                        "Kadang ngurir, ngasir, mikir, ngoding, wes kadung."
+                        "Wong kok kabeh iso."
                     </p>
                     <p class="body-text">
-                        Mendalami peminatan linguistik kebahasaan, minat serius dalam kepenulisan kreatif/sastra, manajemen konten media, serta pengembangan web frontend.
+                        Kuliah di jurusan Sastra Indonesia membawa saya beranjak dari penikmat fiksi di Wattpad, menulis artikel di media online—termasuk Mojok.co, hingga berakhir menuntaskan sebuah buku novel.
+                    </p>
+                    <p class="body-text" style="margin-top: 12px;">
+                        Tapi tak berhenti di teks saja. Saya beralih bidang (lagi). Melenting. Mulai mempelajari soal sistem Linux, OpenWRT, dan topologi jaringan. Kemudian bergeser sedikit ke dunia koding: Python, HTML, PHP, dan Next.js. Hingga ujungnya, saya melahirkan sebuah website berbasis CMS Wordpress, bernama Nyangkem.id.
+                    </p>
+                    <p class="body-text" style="margin-top: 12px;">
+                        Tak cukup di situ. Saya juga belajar skill editing—mulai dari CorelDraw, Canva, hingga Capcut. Membuat logo, mengedit foto, dan mengulik editing video.
+                    </p>
+                    <p class="body-text" style="margin-top: 12px;">
+                        Absurd, sebetulnya. Angan-angan kuliah ketika lulus menjadi sastrawan, malah tersesat tak tahu jalan. Tapi, asyiknya, saya jadi punya banyak hal yang dikuasai.
+                    </p>
+                    <p class="body-text" style="margin-top: 12px; color: var(--color-yellow);">
+                        Intinya, di usia produktif ini, utamakan 'investasi leher ke atas'.
                     </p>
                 </div>
 
