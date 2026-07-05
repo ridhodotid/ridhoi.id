@@ -300,7 +300,7 @@ body::before {
 .loading-hint {
     font-family: var(--font-body);
     font-size: clamp(12px, 3.5vw, 16px);
-    color: var(--color-shadow);
+    color: #888899;
     letter-spacing: 0.1em;
     position: absolute;
     bottom: 24px;
@@ -590,7 +590,7 @@ body::before {
 .footer-hint {
     font-family: var(--font-body);
     font-size: 16px;
-    color: var(--color-border-dim);
+    color: #8888aa;
     letter-spacing: 0.1em;
 }
 

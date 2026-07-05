@@ -36,25 +36,25 @@ CONTENT.about = {
                 <div class="about-tab-content" id="tab-status">
                     <h2 class="section-heading">// BIODATA</h2>
                     <p class="body-text">
-                        Saya, <span style="color:var(--color-yellow)">Muhammad Ridhoi</span>, merupakan warga asli Nganjuk yang punya rasa ingin tahu yang tinggi—sekaligus wibu intelek. Saya lulusan program studi S1 Bahasa dan Sastra Indonesia, Universitas Airlangga (dengan ijazah asli, tentunya).
+                        Saya, <span style="color:var(--color-yellow)">Muhammad Ridhoi</span>, merupakan warga asli Nganjuk yang punya rasa ingin tahu yang tinggi—sekaligus wibu intelek. Saya lulusan program studi <span style="color:var(--color-green)">S1 Bahasa dan Sastra Indonesia, Universitas Airlangga</span> (dengan ijazah asli, tentunya).
                     </p>
                     <p class="body-text" style="margin-top: 12px;">
-                        Selama berkuliah, saya aktif menulis artikel, esai, karya sastra, hingga konten digital. Kadang-kadang juga bikin website kayak gini. Saya saat ini aktif dalam lembaga advokasi Komite Nasional Pelestarian Kretek (KNPK), dan aktif pula di Komunitas Bahagia EA—komunitas rintisan Puthut EA. Kalau mau bertemu saya, silakan bertandang ke Akademi Bahagia. Pasti ketemu, kok.
+                        Selama berkuliah, saya aktif menulis artikel, esai, karya sastra, hingga konten digital. Kadang-kadang juga bikin website kayak gini. Saya saat ini aktif dalam lembaga advokasi <span style="color:var(--color-cyan)">Komite Nasional Pelestarian Kretek (KNPK)</span>, dan aktif pula di <span style="color:var(--color-cyan)">Komunitas Bahagia EA</span>—komunitas rintisan Puthut EA. Kalau mau bertemu saya, silakan bertandang ke <span style="color:var(--color-cyan)">Akademi Bahagia</span>. Pasti ketemu, kok.
                     </p>
                     <p class="body-text" style="margin-top: 12px;">
                         Sadar bahwa lulusan Sarjana Humaniora tak terlalu laku di dunia kerja, saya akhirnya tersesat. Jalan hidup saya melompat ke berbagai bidang. Bahkan, saya sendiri tidak tahu apa saja yang saya bisa dan apa saja yang saya kuasai.
                     </p>
-                    <p class="body-text" style="font-style: italic; color: var(--color-shadow); font-size: 15px; margin: 12px 0;">
+                    <p class="body-text" style="color: var(--color-yellow); font-size: 26px; font-weight: bold; font-style: italic; text-align: center; margin: 16px 0; text-shadow: 2px 2px 0px rgba(0,0,0,0.8);">
                         "Wong kok kabeh iso."
                     </p>
                     <p class="body-text">
-                        Kuliah di jurusan Sastra Indonesia membawa saya beranjak dari penikmat fiksi di Wattpad, menulis artikel di media online—termasuk Mojok.co, hingga berakhir menuntaskan sebuah buku novel.
+                        Kuliah di jurusan Sastra Indonesia membawa saya beranjak dari penikmat fiksi di Wattpad, menulis artikel di media online—termasuk <span style="color:var(--color-cyan)">Mojok.co</span>, hingga berakhir menuntaskan sebuah buku novel.
                     </p>
                     <p class="body-text" style="margin-top: 12px;">
-                        Tapi tak berhenti di teks saja. Saya beralih bidang (lagi). Melenting. Mulai mempelajari soal sistem Linux, OpenWRT, dan topologi jaringan. Kemudian bergeser sedikit ke dunia koding: Python, HTML, PHP, dan Next.js. Hingga ujungnya, saya melahirkan sebuah website berbasis CMS Wordpress, bernama Nyangkem.id.
+                        Tapi tak berhenti di teks saja. Saya beralih bidang (lagi). Melenting. Mulai mempelajari soal sistem <span style="color:var(--color-green)">Linux, OpenWRT, dan topologi jaringan</span>. Kemudian bergeser sedikit ke dunia koding: <span style="color:var(--color-green)">Python, HTML, PHP, dan Next.js</span>. Hingga ujungnya, saya melahirkan sebuah website berbasis CMS Wordpress, bernama <span style="color:var(--color-cyan)">Nyangkem.id</span>.
                     </p>
                     <p class="body-text" style="margin-top: 12px;">
-                        Tak cukup di situ. Saya juga belajar skill editing—mulai dari CorelDraw, Canva, hingga Capcut. Membuat logo, mengedit foto, dan mengulik editing video.
+                        Tak cukup di situ. Saya juga belajar skill editing—mulai dari <span style="color:var(--color-green)">CorelDraw, Canva, hingga Capcut</span>. Membuat logo, mengedit foto, dan mengulik editing video.
                     </p>
                     <p class="body-text" style="margin-top: 12px;">
                         Absurd, sebetulnya. Angan-angan kuliah ketika lulus menjadi sastrawan, malah tersesat tak tahu jalan. Tapi, asyiknya, saya jadi punya banyak hal yang dikuasai.
