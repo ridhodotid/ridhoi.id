@@ -136,6 +136,7 @@ const App = (() => {
 
     let current = states.LOADING;
     let activeSection = null;
+    let updateAudioToggleUI = null;
     const elMenuContainer = () => document.getElementById('main-menu-container');
     const elMenu          = () => document.getElementById('menu-layout');
     const elContent       = () => document.getElementById('content-window');
@@ -283,7 +284,12 @@ const App = (() => {
                 document.removeEventListener('keydown', onContinue);
                 document.removeEventListener('click', onContinue);
 
-                // Play confirm beep if audio is already active, do not force enable
+                // Auto-enable audio and choose a random track
+                const randomTrack = Math.random() > 0.5 ? 'whitespace' : 'rebelarmy';
+                Audio.setEnabled(true);
+                Audio.setTrack(randomTrack);
+                if (updateAudioToggleUI) updateAudioToggleUI();
+
                 if (Audio.enabled) {
                     Audio.playConfirm();
                 }
@@ -396,6 +402,27 @@ const App = (() => {
         let draftSoundEnabled = false;
         let draftTrack = 'whitespace';
 
+        // Update the audio button text and active state
+        updateAudioToggleUI = function() {
+            if (!btnToggle) return;
+            const isEnabled = Audio.enabled;
+            const currentTrack = Audio.track;
+
+            if (iconToggle) iconToggle.textContent = isEnabled ? '♪' : '✕';
+            if (txtToggle) {
+                if (isEnabled) {
+                    const trackLabels = {
+                        whitespace: 'WHITE SPACE',
+                        rebelarmy: 'THE REBEL ARMY'
+                    };
+                    txtToggle.textContent = `NOW PLAYING: ${trackLabels[currentTrack] || 'WHITE SPACE'}`;
+                } else {
+                    txtToggle.textContent = 'SOUND: OFF';
+                }
+            }
+            btnToggle.classList.toggle('active', isEnabled);
+        };
+
         function updateModalUI() {
             // Sound choice highlight
             if (draftSoundEnabled) {
@@ -497,10 +524,8 @@ const App = (() => {
             Audio.setEnabled(draftSoundEnabled);
             Audio.setTrack(draftTrack);
 
-            // Update bottom right icon indicator
-            if (iconToggle) iconToggle.textContent = draftSoundEnabled ? '♪' : '✕';
-            if (txtToggle) txtToggle.textContent = draftSoundEnabled ? 'SOUND: ON' : 'SOUND: OFF';
-            btnToggle.classList.toggle('active', draftSoundEnabled);
+            // Update bottom right icon indicator and text
+            if (updateAudioToggleUI) updateAudioToggleUI();
 
             // Close modal
             settingsModal.classList.add('hidden');
@@ -531,6 +556,7 @@ const App = (() => {
         Audio.init();
         setupNavigation();
         setupAudioToggle();
+        if (updateAudioToggleUI) updateAudioToggleUI();
         runLoadingSequence();
 
         // First interaction unlocks audio (autoplay policy)

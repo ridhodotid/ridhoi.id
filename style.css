@@ -1353,6 +1353,11 @@ body::before {
    13. RESPONSIVE
 ─────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
+    #audio-toggle {
+        bottom: 72px;
+        right: 16px;
+    }
+
     .loading-title {
         white-space: normal;
     }
