@@ -177,7 +177,7 @@ const App = (() => {
             
             // Redirect after transition completes (2.2s)
             setTimeout(() => {
-                window.location.href = 'rpg-portfolio/';
+                window.location.href = 'whitespace/';
             }, 2200);
         } else {
             Audio.playBack();
