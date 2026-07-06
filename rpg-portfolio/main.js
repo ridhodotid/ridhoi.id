@@ -248,23 +248,45 @@ function openDialogue(objName) {
     dialogueBox.classList.remove("hidden");
     dialogueBox.setAttribute("aria-hidden", "false");
     
+    const isMobile = window.matchMedia("(pointer: coarse)").matches;
+    const closeBtn = document.getElementById("btn-dialog-close");
+    if (closeBtn) {
+        closeBtn.textContent = isMobile ? "KEMBALI [X]" : "KEMBALI [ESC]";
+    }
+
     let text = "";
     if (objName === "cat") {
-        text = "MEWO: Meow? (Mewo menatapmu dengan santai. Kucing hitam ini tampak tenang di sudut ruangan.)\n\n[ Tekan ENTER atau Spasi untuk mengelusnya ]";
+        text = isMobile 
+            ? "MEWO: Meow? (Mewo menatapmu dengan santai. Kucing hitam ini tampak tenang di sudut ruangan.)\n\n[ Tekan O untuk mengelus. X untuk kembali ]"
+            : "MEWO: Meow? (Mewo menatapmu dengan santai. Kucing hitam ini tampak tenang di sudut ruangan.)\n\n[ Tekan ENTER atau Spasi untuk mengelusnya ]";
     } else if (objName === "diary") {
-        text = "Sebuah buku gambar sketsa bersampul putih dengan setitik tinta merah di tengahnya. Berisi catatan harian dan biodata Muhammad Ridhoi.\n\n[ Tekan ENTER atau Spasi untuk membuka ]";
+        text = isMobile
+            ? "Sebuah buku gambar sketsa bersampul putih dengan setitik tinta merah di tengahnya. Berisi catatan harian Ridhoi.\n\n[ Tekan O untuk membuka. X untuk kembali ]"
+            : "Sebuah buku gambar sketsa bersampul putih dengan setitik tinta merah di tengahnya. Berisi catatan harian dan biodata Muhammad Ridhoi.\n\n[ Tekan ENTER atau Spasi untuk membuka ]";
     } else if (objName === "pc") {
-        text = "Sebuah laptop hitam ramping menyala di atas tikar. Layarnya menampilkan data inventory projek bikinan Ridhoi.\n\n[ Tekan ENTER atau Spasi untuk membuka ]";
+        text = isMobile
+            ? "Sebuah laptop hitam ramping menyala di atas tikar. Layarnya menampilkan data projek bikinan Ridhoi.\n\n[ Tekan O untuk membuka. X untuk kembali ]"
+            : "Sebuah laptop hitam ramping menyala di atas tikar. Layarnya menampilkan data inventory projek bikinan Ridhoi.\n\n[ Tekan ENTER atau Spasi untuk membuka ]";
     } else if (objName === "lightbulb") {
-        text = "Ini cuma lampu. Barangkali inspirasi Ridhoi?\n\n[ Tekan ENTER atau Spasi untuk menutup ]";
+        text = isMobile
+            ? "Ini cuma lampu. Barangkali inspirasi Ridhoi?\n\n[ Tekan O untuk menutup. X untuk kembali ]"
+            : "Ini cuma lampu. Barangkali inspirasi Ridhoi?\n\n[ Tekan ENTER atau Spasi untuk menutup ]";
     } else if (objName === "door") {
-        text = "Sebuah pintu kayu sederhana melayang tanpa dinding di belakangnya. Apakah Anda ingin keluar dari White Space dan kembali ke dunia nyata?\n\n[ Tekan ENTER atau Spasi untuk membuka pintu ]";
+        text = isMobile
+            ? "Sebuah pintu kayu sederhana melayang tanpa dinding. Apakah Anda ingin keluar ke dunia nyata?\n\n[ Tekan O untuk membuka pintu. X untuk kembali ]"
+            : "Sebuah pintu kayu sederhana melayang tanpa dinding di belakangnya. Apakah Anda ingin keluar dari White Space dan kembali ke dunia nyata?\n\n[ Tekan ENTER atau Spasi untuk membuka pintu ]";
     } else if (objName === "tissue") {
-        text = "sebuah tisu, mungkin untuk....\n\n[ Tekan ENTER atau Spasi untuk menutup ]";
+        text = isMobile
+            ? "sebuah tisu, mungkin untuk....\n\n[ Tekan O untuk menutup. X untuk kembali ]"
+            : "sebuah tisu, mungkin untuk....\n\n[ Tekan ENTER atau Spasi untuk menutup ]";
     } else if (objName === "telephone") {
-        text = "Sebuah telepon rumah retro berwarna putih. Kelihatannya tersambung langsung dengan kontak aktif milik Ridhoi.\n\n[ Tekan ENTER atau Spasi untuk menghubungkan ]";
+        text = isMobile
+            ? "Sebuah telepon rumah retro berwarna putih. Kelihatannya tersambung dengan kontak aktif Ridhoi.\n\n[ Tekan O untuk menghubungkan. X untuk kembali ]"
+            : "Sebuah telepon rumah retro berwarna putih. Kelihatannya tersambung langsung dengan kontak aktif milik Ridhoi.\n\n[ Tekan ENTER atau Spasi untuk menghubungkan ]";
     } else if (objName === "newspaper") {
-        text = "Sebuah koran lokal terlipat rapi di sudut tikar. Tampaknya berisi tulisan opini dan artikel garapan Ridhoi.\n\n[ Tekan ENTER atau Spasi untuk membaca ]";
+        text = isMobile
+            ? "Sebuah koran lokal terlipat rapi. Tampaknya berisi tulisan opini dan artikel garapan Ridhoi.\n\n[ Tekan O untuk membaca. X untuk kembali ]"
+            : "Sebuah koran lokal terlipat rapi di sudut tikar. Tampaknya berisi tulisan opini dan artikel garapan Ridhoi.\n\n[ Tekan ENTER atau Spasi untuk membaca ]";
     }
 
     typeText(dialogueText, text);
@@ -890,7 +912,8 @@ scene("game", () => {
     const mDown = document.getElementById("btn-dpad-down");
     const mLeft = document.getElementById("btn-dpad-left");
     const mRight = document.getElementById("btn-dpad-right");
-    const mAction = document.getElementById("btn-action-a");
+    const mActionO = document.getElementById("btn-action-o");
+    const mActionX = document.getElementById("btn-action-x");
 
     let touchDirections = { up: false, down: false, left: false, right: false };
 
@@ -913,10 +936,19 @@ scene("game", () => {
         bindDpad(mLeft, "left");
         bindDpad(mRight, "right");
         
-        mAction.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            executeAction();
-        });
+        if (mActionO) {
+            mActionO.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                executeAction();
+            });
+        }
+        if (mActionX) {
+            mActionX.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                if (isModalOpen) closeModal();
+                else if (isDialogueOpen) closeDialogue();
+            });
+        }
     }
 
     // Touch swipe-to-walk state variables
