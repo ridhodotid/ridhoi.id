@@ -976,17 +976,19 @@ scene("game", () => {
         else if (activeObjEntity.is("door_obj")) { objW = 24; objH = 36; }
         else if (activeObjEntity.is("cat_obj")) { objW = 20; objH = 20; }
         
-        // Add a 6px clickable padding buffer around the object bounds
+        // Add a 16px clickable padding buffer around the object bounds for mobile fingers
         return (
-            point.x >= activeObjEntity.pos.x - 6 &&
-            point.x <= activeObjEntity.pos.x + objW + 6 &&
-            point.y >= activeObjEntity.pos.y - 6 &&
-            point.y <= activeObjEntity.pos.y + objH + 6
+            point.x >= activeObjEntity.pos.x - 16 &&
+            point.x <= activeObjEntity.pos.x + objW + 16 &&
+            point.y >= activeObjEntity.pos.y - 16 &&
+            point.y <= activeObjEntity.pos.y + objH + 16
         );
     }
 
-    // Mouse click (Desktop) or tap
+    // Mouse click (Desktop only - ignored on touch coarse pointers to avoid double-triggers)
     onClick(() => {
+        if (window.matchMedia("(pointer: coarse)").matches) return;
+
         // Tap/click replaces enter when dialogue/modal is open
         if (isDialogueOpen || isModalOpen) {
             executeAction();
@@ -1039,9 +1041,11 @@ scene("game", () => {
 
     onTouchEnd(() => {
         if (swipeActive && touchStartPos && !hasDragged) {
-            // It's a single tap: execute click-to-move pathing
-            const tPos = toWorld(touchStartPos);
-            targetPos = tPos;
+            // Only walk to tap if we didn't just open/close a modal or dialogue
+            if (!isDialogueOpen && !isModalOpen) {
+                const tPos = toWorld(touchStartPos);
+                targetPos = tPos;
+            }
         }
         
         swipeActive = false;
