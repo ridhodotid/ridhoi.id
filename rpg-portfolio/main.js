@@ -919,8 +919,33 @@ scene("game", () => {
         });
     }
 
+    // Touch swipe-to-walk state variables
+    let touchStartPos = null;
+    let swipeActive = false;
+    let swipeDir = null;
+    let hasDragged = false;
+
     onUpdate(() => {
         if (isDialogueOpen || isModalOpen) return;
+        
+        // Touch swipe-drag movement overrides
+        if (swipeActive && swipeDir) {
+            targetPos = null;
+            if (swipeDir === "left") {
+                player.move(-SPEED, 0);
+                if (player.curAnim() !== "walk-left") player.play("walk-left");
+            } else if (swipeDir === "right") {
+                player.move(SPEED, 0);
+                if (player.curAnim() !== "walk-right") player.play("walk-right");
+            } else if (swipeDir === "up") {
+                player.move(0, -SPEED);
+                if (player.curAnim() !== "walk-up") player.play("walk-up");
+            } else if (swipeDir === "down") {
+                player.move(0, SPEED);
+                if (player.curAnim() !== "walk-down") player.play("walk-down");
+            }
+            return; // Skip D-pad/keyboard if swipe is active
+        }
         
         if (touchDirections.left) {
             player.move(-SPEED, 0);
@@ -960,9 +985,13 @@ scene("game", () => {
         );
     }
 
-    // Mouse click or touch tap destination pathing
+    // Mouse click (Desktop) or tap
     onClick(() => {
-        if (isDialogueOpen || isModalOpen) return;
+        // Tap/click replaces enter when dialogue/modal is open
+        if (isDialogueOpen || isModalOpen) {
+            executeAction();
+            return;
+        }
         const mPos = toWorld(mousePos());
         
         // If clicking directly on active object, trigger dialogue action instantly
@@ -974,17 +1003,53 @@ scene("game", () => {
         targetPos = mPos;
     });
 
+    // Touch events (Mobile swipe-to-walk + tap to enter)
     onTouchStart((pos) => {
-        if (isDialogueOpen || isModalOpen) return;
+        if (isDialogueOpen || isModalOpen) {
+            executeAction();
+            return;
+        }
         const tPos = toWorld(pos);
-        
-        // If tapping directly on active object, trigger dialogue action instantly
         if (checkClickedActiveObject(tPos)) {
             executeAction();
             return;
         }
+        touchStartPos = pos;
+        swipeActive = true;
+        hasDragged = false;
+    });
+
+    onTouchMove((pos) => {
+        if (!swipeActive || !touchStartPos) return;
+        const delta = pos.sub(touchStartPos);
+        const dist = delta.len();
         
-        targetPos = tPos;
+        if (dist > 16) {
+            hasDragged = true;
+            targetPos = null; // override click-to-move pathing
+            if (Math.abs(delta.x) > Math.abs(delta.y)) {
+                swipeDir = delta.x > 0 ? "right" : "left";
+            } else {
+                swipeDir = delta.y > 0 ? "down" : "up";
+            }
+        } else {
+            swipeDir = null;
+        }
+    });
+
+    onTouchEnd(() => {
+        if (swipeActive && touchStartPos && !hasDragged) {
+            // It's a single tap: execute click-to-move pathing
+            const tPos = toWorld(touchStartPos);
+            targetPos = tPos;
+        }
+        
+        swipeActive = false;
+        touchStartPos = null;
+        if (swipeDir) {
+            player.play(`idle-${swipeDir}`);
+            swipeDir = null;
+        }
     });
 });
 
