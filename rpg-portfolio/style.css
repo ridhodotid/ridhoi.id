@@ -1,0 +1,682 @@
+/* ───────────────────────────────────────────────────────────
+   1. RESET & VARIABLE TOKENS
+─────────────────────────────────────────────────────────── */
+:root {
+    --bg-primary:      #ffffff;
+    --bg-window:       #ffffff;
+    --bg-window-alt:   #fafafa;
+    --color-text:      #000000;
+    --color-white:     #000000;
+    --color-green:     #1b5e20;
+    --color-yellow:    #e65100;
+    --color-cyan:      #006064;
+    --color-red:       #b71c1c;
+    --color-border-dim:#dddddd;
+    
+    --font-heading:    'Press Start 2P', cursive;
+    --font-body:       'VT323', monospace;
+    
+    --z-canvas:        1;
+    --z-overlay:       10;
+    --z-ui:            100;
+    --z-crt:           9999;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    z-index: var(--z-canvas);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* ───────────────────────────────────────────────────────────
+   2. CRT SCANLINES & OVERLAYS
+─────────────────────────────────────────────────────────── */
+#crt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-crt);
+    pointer-events: none;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 0.18) 50%
+    );
+    background-size: 100% 4px;
+    animation: crt-flicker 0.15s infinite;
+}
+
+@keyframes crt-flicker {
+    0%   { opacity: 1; }
+    50%  { opacity: 0.98; }
+    100% { opacity: 1; }
+}
+
+body::before {
+    display: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.retro-blink {
+    animation: blink 1s infinite steps(1, start);
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* ───────────────────────────────────────────────────────────
+   3. RETRO UI CONTAINERS (JRPG STYLE)
+─────────────────────────────────────────────────────────── */
+.pixel-box {
+    background-color: var(--bg-window);
+    border: 3px solid var(--color-white);
+    box-shadow:
+        inset 0 0 0 1px var(--color-border-dim),
+        4px 4px 0 0 rgba(0, 0, 0, 0.8);
+    padding: 16px;
+    position: relative;
+}
+
+.screen-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Boot Screen Layout */
+.boot-container {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    opacity: 0;
+    animation: 
+        boot-fade-in 1.8s ease-in-out forwards,
+        boot-float 3s ease-in-out infinite;
+}
+
+@keyframes boot-fade-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1.0); }
+}
+
+@keyframes boot-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+.loading-subtitle {
+    font-family: var(--font-heading);
+    font-size: 10px;
+    color: var(--color-cyan);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.loading-title {
+    font-family: var(--font-heading);
+    font-size: clamp(16px, 4vw, 32px);
+    color: var(--color-white);
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.8);
+    margin-bottom: 8px;
+}
+
+.loading-class {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    color: var(--color-yellow);
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+.press-start-prompt {
+    font-family: var(--font-heading);
+    font-size: 12px;
+    color: var(--color-yellow);
+    background: rgba(255, 255, 255, 0.05);
+    border: 3px double var(--color-white);
+    padding: 14px 20px;
+    cursor: pointer;
+    margin-bottom: 40px;
+    box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.8);
+}
+
+.press-start-prompt:hover {
+    background: var(--color-white);
+    color: var(--bg-primary);
+}
+
+.boot-instructions {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #888899;
+}
+
+/* ───────────────────────────────────────────────────────────
+   4. DIALOGUE BOX
+─────────────────────────────────────────────────────────── */
+.dialog-box {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 650px;
+    z-index: var(--z-ui);
+    display: flex;
+    flex-direction: column;
+    min-height: 140px;
+}
+
+.dialog-header {
+    font-family: var(--font-heading);
+    font-size: 8px;
+    color: var(--color-cyan);
+    margin-bottom: 8px;
+    border-bottom: 1px dashed var(--color-border-dim);
+    padding-bottom: 4px;
+}
+
+.dialog-content {
+    font-size: 20px;
+    line-height: 1.4;
+    flex: 1;
+    white-space: pre-wrap;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.btn-dialog-close, .btn-modal-close, .btn-choice {
+    font-family: var(--font-heading);
+    font-size: 8px;
+    background: transparent;
+    color: var(--color-yellow);
+    border: 2px solid var(--color-white);
+    padding: 6px 12px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 0 rgba(0,0,0,0.8);
+}
+
+.btn-dialog-close:hover, .btn-modal-close:hover, .btn-choice:hover {
+    background-color: var(--color-white);
+    color: var(--bg-primary);
+    box-shadow: none;
+}
+
+/* ───────────────────────────────────────────────────────────
+   5. INVENTORY & CONTENT OVERLAY
+─────────────────────────────────────────────────────────── */
+.content-modal-box {
+    width: 90%;
+    max-width: 600px;
+    max-height: 85%;
+    display: flex;
+    flex-direction: column;
+    z-index: var(--z-ui);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--color-white);
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.modal-title {
+    font-family: var(--font-heading);
+    font-size: 12px;
+    color: var(--color-yellow);
+}
+
+.btn-modal-close {
+    border: none;
+    font-size: 14px;
+    box-shadow: none;
+    padding: 4px 8px;
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-yellow) var(--bg-window);
+    padding-right: 8px;
+}
+
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-track { background: var(--bg-window); }
+.modal-body::-webkit-scrollbar-thumb { background: var(--color-yellow); }
+
+/* STATUS/ABOUT PAGE STYLING */
+.status-layout {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.status-avatar {
+    width: 100px;
+    height: 100px;
+    background: var(--bg-window-alt) no-repeat center / cover;
+    border: 3px solid var(--color-white);
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.status-class-title {
+    font-family: var(--font-heading);
+    font-size: 9px;
+    color: var(--color-yellow);
+    margin-top: 6px;
+    text-align: center;
+}
+
+.status-story {
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.status-story p {
+    margin-bottom: 10px;
+}
+
+/* LIST ELEMENTS (PROJECTS & WRITINGS) */
+.jrpg-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.jrpg-item {
+    display: flex;
+    align-items: flex-start;
+    border: 2px solid var(--color-border-dim);
+    padding: 10px;
+    background: var(--bg-window-alt);
+    text-decoration: none;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color 0.1s steps(1);
+}
+
+.jrpg-item:hover, .jrpg-item:focus {
+    border-color: var(--color-yellow);
+    outline: none;
+}
+
+.jrpg-item-arrow {
+    color: var(--color-yellow);
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.jrpg-item-body {
+    flex: 1;
+}
+
+.jrpg-item-title {
+    font-family: var(--font-heading);
+    font-size: 9px;
+    color: var(--color-white);
+    margin-bottom: 4px;
+}
+
+.jrpg-item:hover .jrpg-item-title {
+    color: var(--color-yellow);
+}
+
+.jrpg-item-desc {
+    font-size: 16px;
+    line-height: 1.3;
+    color: #555555;
+}
+
+.jrpg-item-meta {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.jrpg-tag {
+    font-size: 12px;
+    padding: 2px 6px;
+    background: rgba(0, 96, 100, 0.08);
+    color: var(--color-cyan);
+    border: 1px solid var(--color-cyan);
+}
+
+.jrpg-status {
+    font-size: 12px;
+    padding: 2px 6px;
+    background: rgba(27, 94, 32, 0.08);
+    color: var(--color-green);
+    border: 1px solid var(--color-green);
+}
+
+.jrpg-status.wip {
+    background: rgba(230, 81, 0, 0.08);
+    color: var(--color-yellow);
+    border: 1px solid var(--color-yellow);
+}
+
+/* CONTACT LIST */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+/* ───────────────────────────────────────────────────────────
+   6. MOBILE CONTROLS
+─────────────────────────────────────────────────────────── */
+#mobile-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    z-index: var(--z-ui);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 20px;
+    pointer-events: none; /* Let clicks pass through except buttons */
+}
+
+.dpad-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #000000;
+    padding: 6px;
+    border-radius: 12px;
+    pointer-events: auto;
+}
+
+.dpad-btn {
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 0 rgba(0,0,0,0.2);
+}
+
+.dpad-btn:active {
+    background: #000000;
+    color: #ffffff;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
+.dpad-middle-row {
+    display: flex;
+}
+
+.dpad-center-stub {
+    width: 44px;
+    height: 44px;
+    background: #f0f0f0;
+}
+
+.action-btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.action-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #ff3333;
+    color: #ffffff;
+    border: 3px solid #000000;
+    font-family: var(--font-heading);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 0 rgba(0,0,0,0.3);
+}
+
+.action-btn:active {
+    box-shadow: none;
+    transform: translate(3px, 3px);
+    background: #ffffff;
+    color: #ff3333;
+}
+
+.action-label {
+    margin-top: 6px;
+    font-family: var(--font-heading);
+    font-size: 8px;
+    color: #000000;
+}
+
+/* Responsive adjustment */
+@media (min-width: 769px) {
+    #mobile-controls {
+        display: none !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .status-layout, .book-layout {
+        grid-template-columns: 1fr !important;
+        justify-items: center;
+    }
+    .book-layout::after {
+        display: none !important;
+    }
+    .status-avatar {
+        margin-bottom: 12px;
+    }
+}
+
+/* JRPG BOOK LAYOUT */
+.book-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 24px;
+    background: #ffffff;
+    color: #000000;
+    min-height: 320px;
+    position: relative;
+}
+
+.book-layout::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 45%;
+    width: 2px;
+    border-left: 2px dashed #000000;
+    pointer-events: none;
+}
+
+.book-page-left {
+    padding-right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.book-page-right {
+    padding-left: 12px;
+    overflow-y: auto;
+    max-height: 320px;
+}
+
+/* JRPG Submenu List in Book */
+.book-nav-list {
+    list-style: none;
+    width: 100%;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.book-nav-btn {
+    width: 100%;
+    font-family: var(--font-heading);
+    font-size: 8px;
+    text-align: left;
+    background: transparent;
+    border: 2px solid #000000;
+    color: #000000;
+    padding: 8px 12px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 0 rgba(0,0,0,1);
+    transition: background 0.1s steps(1);
+}
+
+.book-nav-btn:hover, .book-nav-btn.active {
+    background: #000000;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+/* PROJECTS B&W GRID */
+.project-bw-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-bw-card {
+    border: 2px solid #000000;
+    background: #ffffff;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding: 12px;
+    text-decoration: none;
+    color: #000000;
+    box-shadow: 3px 3px 0 0 rgba(0,0,0,1);
+    transition: background 0.1s steps(1);
+}
+
+.project-bw-card:hover {
+    background: #000000;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.project-bw-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 2px solid #000000;
+    filter: grayscale(100%) contrast(120%);
+    image-rendering: pixelated;
+    transition: filter 0.1s steps(1);
+}
+
+.project-bw-card:hover .project-bw-img {
+    filter: grayscale(100%) contrast(120%) invert(100%);
+    border-color: #ffffff;
+}
+
+.project-bw-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-bw-title {
+    font-family: var(--font-heading);
+    font-size: 9px;
+    margin-bottom: 6px;
+}
+
+.project-bw-desc {
+    font-size: 16px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    color: #444444;
+}
+.project-bw-card:hover .project-bw-desc {
+    color: #dddddd;
+}
+
+/* Landscape orientation warning overlay */
+#landscape-warning {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    color: #000000;
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+#landscape-warning .phone-icon {
+    font-size: 48px;
+    margin-bottom: 24px;
+    animation: rotate-phone 2s infinite ease-in-out;
+}
+
+@keyframes rotate-phone {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-90deg); }
+}
+
+/* Force landscape warning on portrait mobiles */
+@media (max-width: 980px) and (orientation: portrait) {
+    #landscape-warning {
+        display: flex;
+    }
+}
+

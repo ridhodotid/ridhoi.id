@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Muhammad Ridhoi - Interactive Pixel Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Load Kaboom.js from CDN -->
+    <script src="https://unpkg.com/kaboom@3000.1.17/dist/kaboom.js"></script>
+</head>
+<body>
+    <!-- CRT screen overlay -->
+    <div id="crt-overlay" aria-hidden="true"></div>
+
+    <!-- Booting Screen -->
+    <div id="boot-screen" class="screen-overlay">
+        <div class="boot-container">
+            <div class="loading-subtitle">PORTOFOLIO RPG INTERAKTIF</div>
+            <h1 class="loading-title">MUHAMMAD RIDHOI</h1>
+            <div class="loading-class">SANG PALU GADA</div>
+            
+            <!-- Loading Bar Wrap -->
+            <div class="loading-bar-wrap" id="loading-bar-wrap" style="width:100%; max-width:280px; margin: 20px auto 10px auto;">
+                <div class="loading-bar-track" style="border: 2px solid #000000; height: 16px; padding: 2px; background: #ffffff;">
+                    <div id="loading-bar-fill" style="width: 0%; height: 100%; background: #000000; transition: width 0.1s linear;"></div>
+                </div>
+                <span id="loading-bar-label" style="font-family: 'Press Start 2P', monospace; font-size: 8px; color: #000000; display: block; margin-top: 8px; text-align: center;">DOWNLOADING ASSETS... 0%</span>
+            </div>
+
+            <div class="press-start-prompt retro-blink hidden" id="btn-start-game">
+                PRESS ANY KEY / TAP TO START
+            </div>
+            <div class="boot-instructions">
+                DESKTOP: WASD / PANAH &amp; [SPACE] UNTUK INTERAKSI<br>
+                MOBILE: TAP-TO-MOVE ATAU GUNAKAN VIRTUAL D-PAD &amp; [A]
+            </div>
+        </div>
+    </div>
+
+    <!-- Landscape orientation warning overlay -->
+    <div id="landscape-warning" aria-hidden="true">
+        <div style="text-align: center;">
+            <div class="phone-icon">📴</div>
+            <p style="font-family: 'Press Start 2P', monospace; font-size: 10px; margin: 10px 0; line-height: 1.4;">TOLONG PUTAR HP ANDA KE LANDSCAPE</p>
+            <p style="font-size: 14px; margin-top: 10px; color: #666666;">PLEASE ROTATE YOUR DEVICE TO LANDSCAPE MODE</p>
+        </div>
+    </div>
+
+    <!-- JRPG DOM Overlays (hidden by default) -->
+    <!-- Dialogue Box overlay -->
+    <div id="dialogue-box" class="pixel-box dialog-box hidden" role="dialog" aria-hidden="true">
+        <div class="dialog-header">// OBJECT</div>
+        <div class="dialog-content" id="dialogue-text">...</div>
+        <div class="dialog-footer">
+            <button type="button" class="btn-dialog-close" id="btn-dialog-close">KEMBALI [ESC]</button>
+        </div>
+    </div>
+
+    <!-- Inventory / Content Overlay for Sections (About, Projects, Writing, Contact) -->
+    <div id="content-modal" class="screen-overlay hidden" role="dialog" aria-hidden="true">
+        <div class="pixel-box content-modal-box">
+            <div class="modal-header">
+                <span class="modal-title" id="modal-title">// MENU: TENTANG SAYA</span>
+                <button type="button" class="btn-modal-close" id="btn-modal-close">✕</button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <!-- Dynamically rendered JRPG styled tabs or lists -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Virtual Controls (visible only on mobile viewports) -->
+    <div id="mobile-controls" class="hidden">
+        <div class="dpad-container">
+            <button class="dpad-btn dpad-up" id="btn-dpad-up">▲</button>
+            <div class="dpad-middle-row">
+                <button class="dpad-btn dpad-left" id="btn-dpad-left">◀</button>
+                <div class="dpad-center-stub"></div>
+                <button class="dpad-btn dpad-right" id="btn-dpad-right">▶</button>
+            </div>
+            <button class="dpad-btn dpad-down" id="btn-dpad-down">▼</button>
+        </div>
+        
+        <div class="action-btn-container">
+            <button class="action-btn" id="btn-action-a">A</button>
+            <span class="action-label">INTERACT</span>
+        </div>
+    </div>
+
+    <!-- Main Game Script -->
+    <script src="main.js"></script>
+</body>
+</html>

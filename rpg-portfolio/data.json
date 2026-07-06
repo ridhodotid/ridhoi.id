@@ -1,0 +1,115 @@
+{
+  "about": {
+    "name": "Muhammad Ridhoi",
+    "role": "Writer, Web Developer, & Social Media Specialist",
+    "class": "Sang Palu Gada",
+    "avatar": "assets/images.png",
+    "details": [
+      "Saya, Muhammad Ridhoi, merupakan warga asli Nganjuk yang punya rasa ingin tahu yang tinggi—sekaligus wibu intelek. Saya lulusan program studi S1 Bahasa dan Sastra Indonesia, Universitas Airlangga (dengan ijazah asli, tentunya).",
+      "Selama berkuliah, saya aktif menulis artikel, esai, karya sastra, hingga konten digital. Kadang-kadang juga bikin website kayak gini. Saya saat ini aktif dalam lembaga advokasi Komite Nasional Pelestarian Kretek (KNPK), dan aktif pula di Komunitas Bahagia EA—komunitas rintisan Puthut EA. Kalau mau bertemu saya, silakan bertandang ke Akademi Bahagia. Pasti ketemu, kok.",
+      "Sadar bahwa lulusan Sarjana Humaniora tak terlalu laku di dunia kerja, saya akhirnya tersesat. Jalan hidup saya melompat ke berbagai bidang. Bahkan, saya sendiri tidak tahu apa saja yang saya bisa dan apa saja yang saya kuasai.",
+      "\"Wong kok kabeh iso.\"",
+      "Kuliah di jurusan Sastra Indonesia membawa saya beranjak dari penikmat fiksi di Wattpad, menulis artikel di media online—termasuk Mojok.co, hingga berakhir menuntaskan sebuah buku novel.",
+      "Tapi tak berhenti di teks saja. Saya beralih bidang (lagi). Melenting. Mulai mempelajari soal sistem Linux, OpenWRT, dan topologi jaringan. Kemudian bergeser sedikit ke dunia koding: Python, HTML, PHP, dan Next.js. Hingga ujungnya, saya melahirkan sebuah website berbasis CMS Wordpress, bernama Nyangkem.id.",
+      "Tak cukup di situ. Saya juga belajar skill editing—mulai dari CorelDraw, Canva, hingga Capcut. Membuat logo, mengedit foto, dan mengulik editing video.",
+      "Absurd, sebetulnya. Angan-angan kuliah ketika lulus menjadi sastrawan, malah tersesat tak tahu jalan. Tapi, asyiknya, saya jadi punya banyak hal yang dikuasai.",
+      "Intinya, di usia produktif ini, utamakan 'investasi leher ke atas'."
+    ]
+  },
+  "projects": [
+    {
+      "title": "MEDIA ONLINE NYANGKEM.ID",
+      "desc": "Media rintisan mahasiswa Surabaya menyuarakan keresahan arek-arek lokal dan perantau. Menyampaikan opini positif.",
+      "tags": ["Editorial", "Content Management", "Digital Media"],
+      "link": "https://nyangkem.id/",
+      "status": "LIVE"
+    },
+    {
+      "title": "BUKU ANTOLOGI PUISI",
+      "desc": "Karya sastra kolaboratif mahasiswa Sastra Indonesia UNAIR mengeksplorasi kehidupan & pemikiran mahasiswa kontemporer.",
+      "tags": ["UNAIR Sastra", "Pagan Press", "Published"],
+      "link": "#",
+      "status": "LIVE"
+    },
+    {
+      "title": "NOVEL \"SEMUANYA ASUMSIMU\"",
+      "desc": "Novel solo psikologi fiksi pertama penulis mengeksplorasi hubungan interpersonal dalam dinamika modern. Segera terbit.",
+      "tags": ["Novel Solo", "Fiksi & Psikologi", "Lumpur Press"],
+      "link": "#",
+      "status": "WIP"
+    },
+    {
+      "title": "MOJOK.CO YOUTUBE: SOUND HOREG",
+      "desc": "Narasumber di YouTube Akar Rumput Mojok.co menganalisis tren sound horeg super keras dan perkembangannya di Jawa Timur.",
+      "tags": ["Akar Rumput", "Sound Horeg", "Pop Culture"],
+      "link": "https://www.youtube.com/watch?v=09ZHUEn--aY",
+      "status": "PUBLISHED"
+    },
+    {
+      "title": "MOJOK.CO YOUTUBE: STIGMA WIBU",
+      "desc": "Narasumber di YouTube Akar Rumput Mojok.co mendiskusikan stereotip negatif dan stigma terhadap pecinta anime/manga.",
+      "tags": ["Akar Rumput", "Wibu Stigma", "Anime Culture"],
+      "link": "https://www.youtube.com/watch?v=ZxskZ6gYAwE",
+      "status": "PUBLISHED"
+    }
+  ],
+  "writing": [
+    {
+      "num": "01",
+      "title": "FENOMENA SOUND HOREG YANG VIRAL DI JAWA TIMUR",
+      "date": "2024",
+      "category": "BUDAYA POPULER",
+      "excerpt": "Narasumber di YouTube Akar Rumput Mojok.co membahas tren sound horeg super keras di kalangan muda Jatim.",
+      "link": "https://www.youtube.com/watch?v=09ZHUEn--aY"
+    },
+    {
+      "num": "02",
+      "title": "MEMBONGKAR STIGMA WIBU DI KALANGAN ANAK MUDA",
+      "date": "2024",
+      "category": "POP CULTURE",
+      "excerpt": "Narasumber di YouTube Akar Rumput Mojok.co mendiskusikan stereotip negatif komunitas penggemar anime/manga.",
+      "link": "https://www.youtube.com/watch?v=ZxskZ6gYAwE"
+    },
+    {
+      "num": "03",
+      "title": "NASI BECEK NGANJUK: KULINER KHAS YANG MENGGODA SELERA",
+      "date": "2024",
+      "category": "KULINER",
+      "excerpt": "Liputan mendalam tentang sejarah dan rasa soto bersantan gurih manis berpadu irisan kambing khas Nganjuk.",
+      "link": "#"
+    },
+    {
+      "num": "04",
+      "title": "MENELUSURI POTENSI AGROWISATA DI DESA BENDOASRI",
+      "date": "2024",
+      "category": "SOSIAL",
+      "excerpt": "Investigasi langsung dinamika masyarakat Bendoasri serta peluang agrowisata berbasis kelokalan desa.",
+      "link": "#"
+    },
+    {
+      "num": "05",
+      "title": "MASA DEPAN LITERASI KREATIF DI ERA KECERDASAN BUATAN",
+      "date": "2024",
+      "category": "LITERASI",
+      "excerpt": "Kajian orisinalitas karya tulis fiksi dan nonfiksi serta bagaimana penulis memanfaatkannya secara etis.",
+      "link": "#"
+    }
+  ],
+  "contact": {
+    "instagram": {
+      "name": "INSTAGRAM",
+      "handle": "@ridhodotid",
+      "link": "https://instagram.com/ridhodotid"
+    },
+    "linkedin": {
+      "name": "LINKEDIN",
+      "handle": "Muhammad Ridhoi",
+      "link": "https://www.linkedin.com/in/muhammad-ridhoi/"
+    },
+    "email": {
+      "name": "EMAIL LANGSUNG",
+      "handle": "muh@ridhoi.id",
+      "link": "mailto:muh@ridhoi.id"
+    }
+  }
+}

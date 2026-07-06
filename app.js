@@ -137,9 +137,54 @@ const App = (() => {
     let current = states.LOADING;
     let activeSection = null;
     let updateAudioToggleUI = null;
+    let isConfirmOpen = false;
+    let activeConfirmChoice = 'yes'; // 'yes' or 'no'
     const elMenuContainer = () => document.getElementById('main-menu-container');
     const elMenu          = () => document.getElementById('menu-layout');
     const elContent       = () => document.getElementById('content-window');
+
+    function openConfirmOverlay() {
+        isConfirmOpen = true;
+        activeConfirmChoice = 'yes';
+        const overlay = document.getElementById('rpg-confirm-overlay');
+        if (overlay) overlay.classList.remove('hidden');
+        
+        const btnYes = document.getElementById('btn-confirm-yes');
+        const btnNo = document.getElementById('btn-confirm-no');
+        if (btnYes) btnYes.classList.add('active');
+        if (btnNo) btnNo.classList.remove('active');
+    }
+
+    function closeConfirmOverlay(agreed) {
+        const overlay = document.getElementById('rpg-confirm-overlay');
+        if (overlay) overlay.classList.add('hidden');
+        isConfirmOpen = false;
+        
+        if (agreed) {
+            Audio.playOpen();
+            // Start smooth transition
+            document.body.classList.add("transitioning-to-whitespace");
+            
+            // Adjust title texts dynamically to White Space theme
+            const subtitle = document.querySelector(".loading-subtitle");
+            if (subtitle) {
+                subtitle.textContent = "SELAMAT DATANG DI";
+            }
+            const classTitle = document.querySelector(".loading-class");
+            if (classTitle) {
+                classTitle.textContent = "WHITE SPACE";
+            }
+            
+            // Redirect after transition completes (2.2s)
+            setTimeout(() => {
+                window.location.href = 'rpg-portfolio/';
+            }, 2200);
+        } else {
+            Audio.playBack();
+            const rpgBtn = document.getElementById('nav-rpg');
+            if (rpgBtn) rpgBtn.focus();
+        }
+    }
 
     // ── LOADING → MENU ──
     function transitionToMenu() {
@@ -169,6 +214,10 @@ const App = (() => {
 
     // ── MENU → CONTENT ──
     function transitionToContent(sectionKey) {
+        if (sectionKey === 'rpg') {
+            openConfirmOverlay();
+            return;
+        }
         if (current === states.CONTENT) return;
         current = states.CONTENT;
         activeSection = sectionKey;
@@ -337,6 +386,7 @@ const App = (() => {
                     projects: '6 PROJECTS | LIVE / WIP / CONCEPT',
                     writing: '6 ARTIKEL | CODING & DESAIN & GAME',
                     contact: 'OPEN TO COLLAB | AVAILABLE',
+                    rpg: 'START INTERACTIVE 2D RETRO RPG GAME'
                 };
                 setStatusText(hints[item.dataset.section] || '');
             };
@@ -373,10 +423,60 @@ const App = (() => {
         // Back button
         document.getElementById('btn-back').addEventListener('click', transitionToMenu_fromContent);
 
-        // Keyboard navigation in menu
+        // Bind JRPG confirmation popup clicks and hovers
+        const btnYes = document.getElementById('btn-confirm-yes');
+        const btnNo = document.getElementById('btn-confirm-no');
+        
+        if (btnYes && btnNo) {
+            const toggleChoice = (choice) => {
+                if (activeConfirmChoice !== choice) {
+                    activeConfirmChoice = choice;
+                    Audio.playMove();
+                    if (activeConfirmChoice === 'yes') {
+                        btnYes.classList.add('active');
+                        btnNo.classList.remove('active');
+                    } else {
+                        btnYes.classList.remove('active');
+                        btnNo.classList.add('active');
+                    }
+                }
+            };
+            
+            btnYes.addEventListener('mouseenter', () => toggleChoice('yes'));
+            btnNo.addEventListener('mouseenter', () => toggleChoice('no'));
+            
+            btnYes.addEventListener('click', () => closeConfirmOverlay(true));
+            btnNo.addEventListener('click', () => closeConfirmOverlay(false));
+        }
+
+        // Keyboard navigation in menu and confirmation overlay
         document.addEventListener('keydown', (e) => {
             if (current === states.CONTENT && e.key === 'Escape') {
                 transitionToMenu_fromContent();
+                return;
+            }
+
+            // Keyboard navigation inside JRPG Confirmation Popup
+            if (isConfirmOpen) {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'Tab') {
+                    e.preventDefault();
+                    const newChoice = activeConfirmChoice === 'yes' ? 'no' : 'yes';
+                    activeConfirmChoice = newChoice;
+                    Audio.playMove();
+                    if (activeConfirmChoice === 'yes') {
+                        btnYes.classList.add('active');
+                        btnNo.classList.remove('active');
+                    } else {
+                        btnYes.classList.remove('active');
+                        btnNo.classList.add('active');
+                    }
+                } else if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    closeConfirmOverlay(activeConfirmChoice === 'yes');
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    closeConfirmOverlay(false);
+                }
                 return;
             }
 
