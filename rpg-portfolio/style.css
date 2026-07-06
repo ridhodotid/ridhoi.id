@@ -407,32 +407,34 @@ body::before {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.95);
-    border: 2px solid #000000;
-    padding: 6px;
-    border-radius: 12px;
+    background: transparent;
+    border: none;
+    padding: 0;
     pointer-events: auto;
 }
 
 .dpad-btn {
     width: 44px;
     height: 44px;
-    background: #ffffff;
-    color: #000000;
-    border: 2px solid #000000;
+    background: rgba(255, 255, 255, 0.45);
+    color: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(0, 0, 0, 0.6);
     font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 2px 2px 0 0 rgba(0,0,0,0.2);
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .dpad-btn:active {
-    background: #000000;
+    background: rgba(0, 0, 0, 0.75);
     color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.8);
     box-shadow: none;
-    transform: translate(2px, 2px);
+    transform: translate(1px, 1px);
 }
 
 .dpad-middle-row {
@@ -442,7 +444,7 @@ body::before {
 .dpad-center-stub {
     width: 44px;
     height: 44px;
-    background: #f0f0f0;
+    background: transparent;
 }
 
 .action-btn-container {
@@ -463,30 +465,34 @@ body::before {
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    background: #ffffff;
-    color: #000000;
-    border: 3px solid #000000;
+    background: rgba(255, 255, 255, 0.45);
+    color: rgba(0, 0, 0, 0.8);
+    border: 3px solid rgba(0, 0, 0, 0.6);
     font-family: var(--font-heading);
     font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 2px 2px 0 0 rgba(0,0,0,0.3);
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .action-btn:active {
     box-shadow: none;
-    transform: translate(2px, 2px);
-    background: #000000;
+    transform: translate(1px, 1px);
+    background: rgba(0, 0, 0, 0.75);
     color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.8);
 }
 
 .action-label {
     margin-top: 6px;
     font-family: var(--font-heading);
     font-size: 8px;
-    color: #000000;
+    color: rgba(0, 0, 0, 0.6);
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
 }
 
 /* Responsive adjustment */
