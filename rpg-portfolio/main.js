@@ -175,10 +175,16 @@ let activeObject = null;
 let isDialogueOpen = false;
 let isModalOpen = false;
 let typingTimer = null;
+let isTyping = false;
+let currentFullText = "";
+let currentTargetElement = null;
 
 function typeText(targetElement, text, speed = 20) {
     targetElement.textContent = "";
     let idx = 0;
+    isTyping = true;
+    currentFullText = text;
+    currentTargetElement = targetElement;
     
     function playTextBlip() {
         try {
@@ -204,6 +210,7 @@ function typeText(targetElement, text, speed = 20) {
             if (idx % 2 === 0) playTextBlip();
         } else {
             clearInterval(typingTimer);
+            isTyping = false;
         }
     }, speed);
 }
@@ -885,6 +892,16 @@ scene("game", () => {
         }
 
         if (isDialogueOpen) {
+            if (isTyping) {
+                // Skip typing animation, display full text instantly
+                clearInterval(typingTimer);
+                if (currentTargetElement) {
+                    currentTargetElement.textContent = currentFullText;
+                }
+                isTyping = false;
+                return;
+            }
+
             if (activeObject) {
                 if (activeObject === "lightbulb" || activeObject === "tissue") {
                     closeDialogue();
