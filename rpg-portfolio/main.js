@@ -906,49 +906,23 @@ scene("game", () => {
     onKeyPress("enter", executeAction);
 
     // ─────────────────────────────────────────────────────────────
-    // 6. MOBILE VIRTUAL DPAD MAPPING
+    // 6. MOBILE VIRTUAL ACTION BUTTONS MAPPING
     // ─────────────────────────────────────────────────────────────
-    const mUp = document.getElementById("btn-dpad-up");
-    const mDown = document.getElementById("btn-dpad-down");
-    const mLeft = document.getElementById("btn-dpad-left");
-    const mRight = document.getElementById("btn-dpad-right");
     const mActionO = document.getElementById("btn-action-o");
     const mActionX = document.getElementById("btn-action-x");
 
-    let touchDirections = { up: false, down: false, left: false, right: false };
-
-    function bindDpad(btn, dir) {
-        btn.addEventListener("touchstart", (e) => {
+    if (mActionO) {
+        mActionO.addEventListener("touchstart", (e) => {
             e.preventDefault();
-            targetPos = null; // d-pad overrides touch click-to-move
-            touchDirections[dir] = true;
-        });
-        btn.addEventListener("touchend", (e) => {
-            e.preventDefault();
-            touchDirections[dir] = false;
-            player.play(`idle-${dir}`);
+            executeAction();
         });
     }
-
-    if (mUp) {
-        bindDpad(mUp, "up");
-        bindDpad(mDown, "down");
-        bindDpad(mLeft, "left");
-        bindDpad(mRight, "right");
-        
-        if (mActionO) {
-            mActionO.addEventListener("touchstart", (e) => {
-                e.preventDefault();
-                executeAction();
-            });
-        }
-        if (mActionX) {
-            mActionX.addEventListener("touchstart", (e) => {
-                e.preventDefault();
-                if (isModalOpen) closeModal();
-                else if (isDialogueOpen) closeDialogue();
-            });
-        }
+    if (mActionX) {
+        mActionX.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            if (isDialogueOpen) closeDialogue();
+            else if (isModalOpen) closeModal();
+        });
     }
 
     // Touch swipe-to-walk state variables
@@ -976,21 +950,6 @@ scene("game", () => {
                 player.move(0, SPEED);
                 if (player.curAnim() !== "walk-down") player.play("walk-down");
             }
-            return; // Skip D-pad/keyboard if swipe is active
-        }
-        
-        if (touchDirections.left) {
-            player.move(-SPEED, 0);
-            if (player.curAnim() !== "walk-left") player.play("walk-left");
-        } else if (touchDirections.right) {
-            player.move(SPEED, 0);
-            if (player.curAnim() !== "walk-right") player.play("walk-right");
-        } else if (touchDirections.up) {
-            player.move(0, -SPEED);
-            if (player.curAnim() !== "walk-up") player.play("walk-up");
-        } else if (touchDirections.down) {
-            player.move(0, SPEED);
-            if (player.curAnim() !== "walk-down") player.play("walk-down");
         }
     });
 

@@ -397,54 +397,10 @@ body::before {
     width: 100%;
     z-index: var(--z-ui);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: flex-end;
     padding: 0 20px;
     pointer-events: none; /* Let clicks pass through except buttons */
-}
-
-.dpad-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: transparent;
-    border: none;
-    padding: 0;
-    pointer-events: auto;
-}
-
-.dpad-btn {
-    width: 44px;
-    height: 44px;
-    background: rgba(255, 255, 255, 0.45);
-    color: rgba(0, 0, 0, 0.8);
-    border: 2px solid rgba(0, 0, 0, 0.6);
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 1px 1px 0px rgba(0,0,0,0.15);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-}
-
-.dpad-btn:active {
-    background: rgba(0, 0, 0, 0.75);
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.8);
-    box-shadow: none;
-    transform: translate(1px, 1px);
-}
-
-.dpad-middle-row {
-    display: flex;
-}
-
-.dpad-center-stub {
-    width: 44px;
-    height: 44px;
-    background: transparent;
 }
 
 .action-btn-container {
