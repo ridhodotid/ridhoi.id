@@ -47,23 +47,7 @@ const doorSrc = generatePixelSprite(24, 36, (ctx) => {
     ctx.strokeRect(17, 16, 2, 2);
 });
 
-// Mewo (Black Cat) Sprite
-const catSrc = generatePixelSprite(20, 20, (ctx) => {
-    ctx.fillStyle = "#000000";
-    // Body
-    ctx.fillRect(2, 8, 12, 8);
-    // Head
-    ctx.fillRect(9, 4, 8, 8);
-    // Ears
-    ctx.fillRect(9, 1, 2, 3);
-    ctx.fillRect(15, 1, 2, 3);
-    // Tail
-    ctx.fillRect(0, 10, 2, 4);
-    // Eyes
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(11, 7, 1, 1);
-    ctx.fillRect(14, 7, 1, 1);
-});
+
 
 // Exclamation Indicator Bubble
 const exclSrc = generatePixelSprite(12, 12, (ctx) => {
@@ -124,7 +108,19 @@ loadSprite("diary", "assets/whitespace_diary.png");
 loadSprite("tissue", "assets/whitespace_tissue.png");
 loadSprite("lightbulb", "assets/whitespace_bulb.png");
 loadSprite("door", doorSrc);
-loadSprite("cat", catSrc);
+loadSprite("cat", "assets/mewo.png", {
+    sliceX: 7,
+    sliceY: 1,
+    anims: {
+        idle: 0,
+        scratch: {
+            from: 0,
+            to: 6,
+            speed: 5,
+            loop: true
+        }
+    }
+});
 loadSprite("excl", exclSrc);
 loadSprite("telephone", "assets/kontak.png");
 loadSprite("newspaper", "assets/newspaper.png");
@@ -523,6 +519,7 @@ const assetsToLoad = [
     "assets/kontak.png",
     "assets/newspaper.png",
     "assets/laptop.png",
+    "assets/mewo.png",
     "../White Space (Omori Original Soundtrack).m4a",
     "../The Rebel Army (Final Fantasy II Original Soundtrack).m4a"
 ];
@@ -654,7 +651,7 @@ scene("game", () => {
 
     // Mewo (Cat): Below and left of the mat
     const cat = add([
-        sprite("cat"),
+        sprite("cat", { anim: "scratch" }),
         pos(152, 196),
         area(),
         body({ isStatic: true }),
